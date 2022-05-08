@@ -1,17 +1,33 @@
-pragma circom 2.0.0;
+pragma circom 2.0.4;
 
-// [assignment] Modify the circuit below to perform a multiplication of three signals
+template Multiplier2 () {  
+
+   // Declaration of signals.  
+   signal input a;  
+   signal input b;  
+   signal output c;  
+
+   // Constraints.  
+   c <== a * b;  
+}
 
 template Multiplier3 () {  
 
    // Declaration of signals.  
-   signal input a;  
-   signal input b;
-   signal input c;
-   signal output d;  
+   signal input in1;  
+   signal input in2;
+   signal input in3;
+   signal output out;  
+
+   component multiplierA = Multiplier2();
+   component multiplierB = Multiplier2();
 
    // Constraints.  
-   d <== a * b * c;  
+   multiplierA.a <== in1;
+   multiplierA.b <== in2;
+   multiplierB.a <== multiplierA.c; 
+   multiplierB.b <== in3;
+   out <== multiplierB.c; 
 }
 
 component main = Multiplier3();
